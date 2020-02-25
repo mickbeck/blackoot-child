@@ -25,85 +25,50 @@
 <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
-
-<div id="main-wrap">
-	<div id="header-wrap">
-		<!-- <div id="tophead-wrap">
-			<div class="container">
-				<div class="tophead">
-					<?php echo get_search_form(); ?>
-				</div>
-			</div>
-		</div> -->
-
-		<div id="header">
-		<div class="video-wrapper">
-						<video autoplay muted loop>
-                            <source src="<?php echo get_theme_file_uri();?>/img/video.mp4" type="video/mp4">
-                        </video> 
-					</div>
-			<div class="container">
-				<div id="logo">
-					
-
-					<a href="<?php echo esc_url( home_url() ); ?>" title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'>
-						<?php
-						if ( get_theme_mod( 'blackoot_logo' ) ) :
-							?>
-							<h1 class="site-title" style="display:none"><?php echo bloginfo( 'name' ); ?></h1>
-							<img src="<?php echo esc_url( get_theme_mod( 'blackoot_logo' ) ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>">
-							<?php
-						else :
-							?>
-							<h1 class="site-title"><?php echo bloginfo( 'name' ); ?></h1>
-							<?php
-						endif;
-						?>
-					</a>
-				</div>
-				<?php
-
-				if ( get_bloginfo( 'description' ) ) :
-					?>
-					<div id="tagline"><?php bloginfo( 'description' ); ?></div>
+	<div id="main-wrap">
+		<div id="header-wrap">
+			<div id="nav-wrap">
+				<div id="navbar" >
+					<h1><i class="fas fa-laptop-code fa-1x"></i> beckspace.ca</h1>
 					<?php
-				endif;
-
-			?>
+						wp_nav_menu(
+							array(
+							'theme_location' => 'primary',
+							'items_wrap' => '<ul id="%1$s" class="%2$s sf-menu">%3$s</ul>',
+							)
+						);
+						blackoot_dropdown_nav_menu();
+					?>
+				</div>
+			</div>
+			<div class="banner-wrapper" >
+				<img src="<?php echo get_theme_file_uri();?>\img\lines-web-design.jpg" alt="">
+				<!-- <div class="video-wrapper">
+					<video autoplay muted loop>
+                    	<source src="<?php echo get_theme_file_uri();?>/img/video.mp4" type="video/mp4">
+                	</video> 
+				</div> -->
+				<!-- <div id="header">
+					<div class="container">
+						<div id="logo">
+						</div>
+					</div> -->
+				<!-- </div> -->
 			</div>
 		</div>
-
-		<div id="nav-wrap">
-			<div id="navbar" class="container">
-				<?php
-				wp_nav_menu(
-					array(
-						'theme_location' => 'primary',
-						'items_wrap' => '<ul id="%1$s" class="%2$s sf-menu">%3$s</ul>',
-					)
-				);
-				blackoot_dropdown_nav_menu();
-				?>
-			</div>
+		<?php
+			if ( get_custom_header()->url ) :
+			if (
+				( is_front_page() && 'off' !== get_theme_mod( 'home_header_image' ) )
+				|| ( is_page() && ! is_front_page() && 'off' !== get_theme_mod( 'pages_header_image' ) )
+				|| ( is_single() && 'off' !== get_theme_mod( 'single_header_image' ) )
+				|| ( ! is_front_page() && ! is_singular() && 'off' !== get_theme_mod( 'blog_header_image' ) )
+				|| ( is_404() )
+			) :
+		?>
+		<div id="header-image" class="container">
+			<img src="<?php header_image(); ?>" height="<?php echo esc_attr( get_custom_header()->height ); ?>" width="<?php echo esc_attr( get_custom_header()->width ); ?>" alt='' />
 		</div>
-	</div>
-	<?php
-
-	if ( get_custom_header()->url ) :
-
-		if (
-			( is_front_page() && 'off' !== get_theme_mod( 'home_header_image' ) )
-			|| ( is_page() && ! is_front_page() && 'off' !== get_theme_mod( 'pages_header_image' ) )
-			|| ( is_single() && 'off' !== get_theme_mod( 'single_header_image' ) )
-			|| ( ! is_front_page() && ! is_singular() && 'off' !== get_theme_mod( 'blog_header_image' ) )
-			|| ( is_404() )
-		) :
-
-			?>
-			<div id="header-image" class="container">
-				<img src="<?php header_image(); ?>" height="<?php echo esc_attr( get_custom_header()->height ); ?>" width="<?php echo esc_attr( get_custom_header()->width ); ?>" alt='' />
-			</div>
-			<?php
-
+		<?php
 		endif;
-	endif;
+		endif;
